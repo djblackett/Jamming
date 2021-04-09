@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
+
+import "./Track.css";
 
 class Track extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -9,30 +10,42 @@ class Track extends React.Component {
     this.removeTrack = this.removeTrack.bind(this);
   }
 
-  addTrack() {
-  this.props.onAdd(this.props.track);
+  addTrack(event) {
+    this.props.onAdd(this.props.track);
   }
 
-  removeTrack() {
+  removeTrack(event) {
     this.props.onRemove(this.props.track);
   }
 
   renderAction() {
-    return <button className="Track-action" onClick={this.addTrack}>{isRemoval? "-" : "+"}</button>
+    if (this.props.isRemoval) {
+      return (
+        <button className="Track-action" onClick={this.removeTrack}>
+          -
+        </button>
+      );
+    }
+    return (
+      <button className="Track-action" onClick={this.addTrack}>
+        +
+      </button>
+    );
   }
-
-// todo #55 - not sure where it wanta me to put onClick
 
   render() {
     return (
       <div className="Track">
-      <div className="Track-information"> 
-        <h3>{this.props.track.name}</h3>
-        <p>{this.props.track.artist} | {this.props.track.album}</p>
+        <div className="Track-information">
+          <h3>{this.props.track.name}</h3>
+          <p>
+            {this.props.track.artist} | {this.props.track.album}
+          </p>
+        </div>
+        {this.renderAction()}
       </div>
-      <button className="Track-action" onClick={this.props.removeTrack}><!-- + or - will go here --></button>
-    </div>
-    )
+    );
   }
-
 }
+
+export default Track;
